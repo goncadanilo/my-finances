@@ -12,16 +12,7 @@ createServer({
     this.namespace = 'api';
 
     this.get('/transactions', () => {
-      return [
-        {
-          id: 1,
-          title: 'Transaction 1',
-          amount: 100,
-          type: 'deposit',
-          category: 'Food',
-          createdAt: new Date(),
-        },
-      ];
+      return this.schema.all('transactions');
     });
 
     this.post('/transactions', (schema, request) => {
