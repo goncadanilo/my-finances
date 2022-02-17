@@ -11,8 +11,6 @@ interface NewTransactionModalProps {
   onRequestClose: () => void;
 }
 
-Modal.setAppElement('#root');
-
 export function NewTransactionModal({
   isOpen,
   onRequestClose,
