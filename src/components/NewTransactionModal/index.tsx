@@ -24,9 +24,20 @@ export function NewTransactionModal({
     'deposit' | 'withdraw'
   >('deposit');
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-    createTransaction({ title, amount, transactionType, category });
+
+    await createTransaction({ title, amount, transactionType, category });
+
+    clearForm();
+    onRequestClose();
+  }
+
+  function clearForm() {
+    setTitle('');
+    setAmount(0);
+    setCategory('');
+    setTransactionType('deposit');
   }
 
   return (
