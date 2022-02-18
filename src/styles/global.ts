@@ -90,4 +90,22 @@ export const GlobalStyle = createGlobalStyle`
       filter: brightness(0.8);
     }
   }
+
+  .icon {
+    border: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    transition: filter 0.2s;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
 `;
