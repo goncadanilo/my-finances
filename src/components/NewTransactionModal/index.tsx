@@ -1,21 +1,15 @@
 import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
-import closeImg from 'src/assets/close.svg';
 import incomeImg from 'src/assets/income.svg';
 import outcomeImg from 'src/assets/outcome.svg';
+import { CloseModalButton } from 'src/components/CloseModalButton';
+import { useModal } from 'src/hooks/useModal';
 import { useTransactions } from 'src/hooks/useTransactions';
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
 
-interface NewTransactionModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-}
-
-export function NewTransactionModal({
-  isOpen,
-  onRequestClose,
-}: NewTransactionModalProps) {
+export function NewTransactionModal() {
   const { createTransaction } = useTransactions();
+  const { isOpen, closeModal } = useModal();
 
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState(0);
@@ -24,13 +18,17 @@ export function NewTransactionModal({
     'deposit' | 'withdraw'
   >('deposit');
 
+  function handleCloseModal() {
+    closeModal({ name: 'new-transaction-modal' });
+  }
+
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
     await createTransaction({ title, amount, transactionType, category });
 
     clearForm();
-    onRequestClose();
+    handleCloseModal();
   }
 
   function clearForm() {
@@ -42,18 +40,12 @@ export function NewTransactionModal({
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      isOpen={isOpen({ name: 'new-transaction-modal' })}
+      onRequestClose={handleCloseModal}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >
-      <button
-        type="button"
-        className="react-modal-close"
-        onClick={onRequestClose}
-      >
-        <img src={closeImg} alt="Fechar modal" />
-      </button>
+      <CloseModalButton onClick={handleCloseModal} />
 
       <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastrar Transação</h2>

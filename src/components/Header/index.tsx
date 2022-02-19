@@ -1,16 +1,18 @@
 import logoImg from 'src/assets/logo.svg';
+import { useModal } from 'src/hooks/useModal';
 import { Container, Content } from './styles';
 
-interface HeaderProps {
-  onOpenNewTransactionModal: () => void;
-}
+export function Header() {
+  const { openModal } = useModal();
 
-export function Header({ onOpenNewTransactionModal }: HeaderProps) {
   return (
     <Container>
       <Content>
         <img src={logoImg} alt="My Finances" />
-        <button type="button" onClick={onOpenNewTransactionModal}>
+        <button
+          type="button"
+          onClick={() => openModal({ name: 'new-transaction-modal' })}
+        >
           Nova transação
         </button>
       </Content>

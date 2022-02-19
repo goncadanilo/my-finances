@@ -38,7 +38,7 @@ export function TransactionsTable() {
               </td>
               <td>
                 <button
-                  className="icon"
+                  className="icon-button"
                   onClick={() => deleteTransaction(transaction.id)}
                 >
                   <img src={deleteImg} alt="Excluir transação" />
