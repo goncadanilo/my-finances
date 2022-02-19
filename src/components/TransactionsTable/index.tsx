@@ -1,11 +1,21 @@
 import deleteImg from 'src/assets/delete.svg';
+import emptyImg from 'src/assets/empty.svg';
 import { useModal } from 'src/hooks/useModal';
 import { useTransactions } from 'src/hooks/useTransactions';
-import { Container } from './styles';
+import { Container, EmptyContainer } from './styles';
 
 export function TransactionsTable() {
   const { transactions, selectTransaction } = useTransactions();
   const { openModal } = useModal();
+
+  if (!transactions.length) {
+    return (
+      <EmptyContainer>
+        <img src={emptyImg} alt="Nenhuma transação encontrada" />
+        <h2>Nenhuma transação encontrada</h2>
+      </EmptyContainer>
+    );
+  }
 
   return (
     <Container>
