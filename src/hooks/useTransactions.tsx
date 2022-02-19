@@ -66,8 +66,6 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     const response = await api.put(`/transactions/${id}`, transactionInput);
     const { transactions: updatedTransaction } = response.data;
 
-    console.log(updatedTransaction);
-
     setTransactions(
       transactions.map(transaction =>
         transaction.id === id ? updatedTransaction : transaction,
