@@ -1,8 +1,9 @@
 import deleteImg from 'src/assets/delete.svg';
+import editImg from 'src/assets/edit.svg';
 import emptyImg from 'src/assets/empty.svg';
 import { useModal } from 'src/hooks/useModal';
 import { useTransactions } from 'src/hooks/useTransactions';
-import { Container, EmptyContainer } from './styles';
+import { ActionsContainer, Container, EmptyContainer } from './styles';
 
 export function TransactionsTable() {
   const { transactions, selectTransaction } = useTransactions();
@@ -49,15 +50,31 @@ export function TransactionsTable() {
                 }).format(new Date(transaction.createdAt))}
               </td>
               <td>
-                <button
-                  className="icon-button"
-                  onClick={() => {
-                    selectTransaction(transaction);
-                    openModal({ name: 'confirm-delete-transaction-modal' });
-                  }}
-                >
-                  <img src={deleteImg} alt="Excluir transação" />
-                </button>
+                <ActionsContainer>
+                  <button
+                    title="Editar transação"
+                    type="button"
+                    className="icon-button"
+                    onClick={() => {
+                      selectTransaction(transaction);
+                      openModal({ name: 'edit-transaction-modal' });
+                    }}
+                  >
+                    <img src={editImg} alt="Excluir transação" />
+                  </button>
+
+                  <button
+                    title="Excluir transação"
+                    type="button"
+                    className="icon-button"
+                    onClick={() => {
+                      selectTransaction(transaction);
+                      openModal({ name: 'confirm-delete-transaction-modal' });
+                    }}
+                  >
+                    <img src={deleteImg} alt="Excluir transação" />
+                  </button>
+                </ActionsContainer>
               </td>
             </tr>
           ))}

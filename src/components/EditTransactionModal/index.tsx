@@ -1,14 +1,19 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import incomeImg from 'src/assets/income.svg';
 import outcomeImg from 'src/assets/outcome.svg';
 import { CloseModalButton } from 'src/components/CloseModalButton';
+import {
+  Container,
+  RadioBox,
+  TransactionTypeContainer,
+} from 'src/components/NewTransactionModal/styles';
 import { useModal } from 'src/hooks/useModal';
 import { useTransactions } from 'src/hooks/useTransactions';
-import { Container, RadioBox, TransactionTypeContainer } from './styles';
 
-export function NewTransactionModal() {
-  const { createTransaction, selectTransaction } = useTransactions();
+export function EditTransactionModal() {
+  const { selectedTransaction, selectTransaction, updateTransaction } =
+    useTransactions();
   const { isOpen, closeModal } = useModal();
 
   const [title, setTitle] = useState('');
@@ -18,15 +23,29 @@ export function NewTransactionModal() {
     'deposit' | 'withdraw'
   >('deposit');
 
+  useEffect(() => {
+    if (selectedTransaction) {
+      setTitle(selectedTransaction.title);
+      setAmount(selectedTransaction.amount);
+      setCategory(selectedTransaction.category);
+      setTransactionType(selectedTransaction.transactionType);
+    }
+  }, [selectedTransaction]);
+
   function handleCloseModal() {
     selectTransaction(null);
-    closeModal({ name: 'new-transaction-modal' });
+    closeModal({ name: 'edit-transaction-modal' });
   }
 
-  async function handleCreateNewTransaction(event: FormEvent) {
+  async function handleEditTransaction(event: FormEvent) {
     event.preventDefault();
 
-    await createTransaction({ title, amount, transactionType, category });
+    await updateTransaction(selectedTransaction?.id as number, {
+      title,
+      amount,
+      transactionType,
+      category,
+    });
 
     clearForm();
     handleCloseModal();
@@ -41,15 +60,15 @@ export function NewTransactionModal() {
 
   return (
     <Modal
-      isOpen={isOpen({ name: 'new-transaction-modal' })}
+      isOpen={isOpen({ name: 'edit-transaction-modal' })}
       onRequestClose={handleCloseModal}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >
       <CloseModalButton onClick={handleCloseModal} />
 
-      <Container onSubmit={handleCreateNewTransaction}>
-        <h2>Cadastrar Transação</h2>
+      <Container onSubmit={handleEditTransaction}>
+        <h2>Editar Transação</h2>
 
         <input
           placeholder="Título"
@@ -91,7 +110,7 @@ export function NewTransactionModal() {
           onChange={event => setCategory(event.target.value)}
         />
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Salvar</button>
       </Container>
     </Modal>
   );

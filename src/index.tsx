@@ -26,6 +26,12 @@ createServer({
       return schema.create('transactions', data);
     });
 
+    this.put('/transactions/:id', (schema, request): any => {
+      const { id } = request.params;
+      const data = JSON.parse(request.requestBody);
+      return schema.find('transactions', id)?.update(data);
+    });
+
     this.delete('/transactions/:id', (schema, request) => {
       const { id } = request.params;
       return schema.where('transactions', { id }).destroy();

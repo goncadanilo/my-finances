@@ -59,3 +59,9 @@ export const EmptyContainer = styled.div`
     margin-top: 2rem;
   }
 `;
+
+export const ActionsContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;

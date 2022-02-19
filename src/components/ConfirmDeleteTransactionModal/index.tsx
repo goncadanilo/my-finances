@@ -5,7 +5,8 @@ import { useTransactions } from 'src/hooks/useTransactions';
 import { ActionsContainer, Container } from './styles';
 
 export function ConfirmDeleteTransactionModal() {
-  const { selectedTransaction, deleteTransaction } = useTransactions();
+  const { selectedTransaction, selectTransaction, deleteTransaction } =
+    useTransactions();
   const { isOpen, closeModal } = useModal();
 
   async function handleDeleteTransaction() {
@@ -14,6 +15,7 @@ export function ConfirmDeleteTransactionModal() {
   }
 
   function handleCloseModal() {
+    selectTransaction(null);
     closeModal({ name: 'confirm-delete-transaction-modal' });
   }
 

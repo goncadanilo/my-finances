@@ -27,6 +27,10 @@ interface TransactionsContextData {
   selectedTransaction: Transaction | null;
   selectTransaction: (transaction: Transaction | null) => void;
   createTransaction: (transaction: TransactionInput) => Promise<void>;
+  updateTransaction: (
+    id: number,
+    transaction: TransactionInput,
+  ) => Promise<void>;
   deleteTransaction: (id: number) => Promise<void>;
 }
 
@@ -55,6 +59,22 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     setTransactions([...transactions, newTransaction]);
   }
 
+  async function updateTransaction(
+    id: number,
+    transactionInput: TransactionInput,
+  ) {
+    const response = await api.put(`/transactions/${id}`, transactionInput);
+    const { transactions: updatedTransaction } = response.data;
+
+    console.log(updatedTransaction);
+
+    setTransactions(
+      transactions.map(transaction =>
+        transaction.id === id ? updatedTransaction : transaction,
+      ),
+    );
+  }
+
   async function deleteTransaction(id: number) {
     await api.delete(`/transactions/${id}`);
     setTransactions(transactions.filter(transaction => transaction.id !== id));
@@ -71,6 +91,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         selectedTransaction,
         selectTransaction,
         createTransaction,
+        updateTransaction,
         deleteTransaction,
       }}
     >

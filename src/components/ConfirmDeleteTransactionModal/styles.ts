@@ -24,6 +24,7 @@ export const ActionsContainer = styled.div`
 
   button {
     font-size: 1rem;
+    font-weight: 600;
     color: #fff;
     background: var(--red);
     border: 0;
