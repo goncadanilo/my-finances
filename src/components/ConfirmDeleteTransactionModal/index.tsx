@@ -30,7 +30,7 @@ export function ConfirmDeleteTransactionModal() {
 
       <Container>
         <h2>
-          Excluindo <span>{`${selectedTransaction?.title}`}</span>
+          Excluir <span>{`${selectedTransaction?.title}`}</span>
         </h2>
 
         <p>Tem certeza que deseja excluir essa transação?</p>
