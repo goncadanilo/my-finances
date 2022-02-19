@@ -1,9 +1,11 @@
 import deleteImg from 'src/assets/delete.svg';
+import { useModal } from 'src/hooks/useModal';
 import { useTransactions } from 'src/hooks/useTransactions';
 import { Container } from './styles';
 
 export function TransactionsTable() {
-  const { transactions, deleteTransaction } = useTransactions();
+  const { transactions, selectTransaction } = useTransactions();
+  const { openModal } = useModal();
 
   return (
     <Container>
@@ -39,7 +41,10 @@ export function TransactionsTable() {
               <td>
                 <button
                   className="icon-button"
-                  onClick={() => deleteTransaction(transaction.id)}
+                  onClick={() => {
+                    selectTransaction(transaction);
+                    openModal({ name: 'confirm-delete-transaction-modal' });
+                  }}
                 >
                   <img src={deleteImg} alt="Excluir transação" />
                 </button>

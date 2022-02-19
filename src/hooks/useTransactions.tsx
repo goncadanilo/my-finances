@@ -24,6 +24,8 @@ interface TransactionsProviderProps {
 
 interface TransactionsContextData {
   transactions: Transaction[];
+  selectedTransaction: Transaction | null;
+  selectTransaction: (transaction: Transaction | null) => void;
   createTransaction: (transaction: TransactionInput) => Promise<void>;
   deleteTransaction: (id: number) => Promise<void>;
 }
@@ -34,6 +36,8 @@ const TransactionsContext = createContext<TransactionsContextData>(
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
 
   useEffect(() => {
     api
@@ -56,9 +60,19 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     setTransactions(transactions.filter(transaction => transaction.id !== id));
   }
 
+  function selectTransaction(transaction: Transaction | null) {
+    setSelectedTransaction(transaction);
+  }
+
   return (
     <TransactionsContext.Provider
-      value={{ transactions, createTransaction, deleteTransaction }}
+      value={{
+        transactions,
+        selectedTransaction,
+        selectTransaction,
+        createTransaction,
+        deleteTransaction,
+      }}
     >
       {children}
     </TransactionsContext.Provider>
