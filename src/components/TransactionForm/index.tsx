@@ -2,12 +2,20 @@ import { FormEvent, useEffect, useState } from 'react';
 import incomeImg from 'src/assets/income.svg';
 import outcomeImg from 'src/assets/outcome.svg';
 import { useTransactions } from 'src/hooks/useTransactions';
+import * as Yup from 'yup';
 import { Container, RadioBox, TransactionTypeContainer } from './styles';
+import { transactionSchema } from './validation';
 
 interface TransactionFormProps {
-  beforeSubmit?: () => void;
+  beforeSubmit: () => void;
   formTitle: string;
   buttonText: string;
+}
+
+interface FormErros {
+  title?: string;
+  amount?: string;
+  category?: string;
 }
 
 export function TransactionForm({
@@ -18,6 +26,7 @@ export function TransactionForm({
   const { selectedTransaction, createTransaction, updateTransaction } =
     useTransactions();
 
+  const [errors, setErrors] = useState<FormErros>({});
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
@@ -37,19 +46,28 @@ export function TransactionForm({
   async function handleSubmitForm(event: FormEvent) {
     event.preventDefault();
 
-    if (selectedTransaction) {
-      await updateTransaction(selectedTransaction.id, {
-        title,
-        amount,
-        transactionType,
-        category,
-      });
-    } else {
-      await createTransaction({ title, amount, transactionType, category });
-    }
+    try {
+      const data = { title, amount, transactionType, category };
+      await transactionSchema.validate(data, { abortEarly: false });
 
-    beforeSubmit?.();
-    clearForm();
+      if (selectedTransaction) {
+        await updateTransaction(selectedTransaction.id, data);
+      } else {
+        await createTransaction(data);
+      }
+
+      beforeSubmit();
+      clearForm();
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const error = err.inner.reduce(
+          (acc, { path, message }) => ({ ...acc, [`${path}`]: message }),
+          {},
+        );
+
+        setErrors(error);
+      }
+    }
   }
 
   function clearForm() {
@@ -63,17 +81,24 @@ export function TransactionForm({
     <Container onSubmit={handleSubmitForm}>
       <h2>{formTitle}</h2>
 
-      <input
-        placeholder="Título"
-        value={title}
-        onChange={event => setTitle(event.target.value)}
-      />
-      <input
-        placeholder="Valor"
-        type="number"
-        value={amount}
-        onChange={event => setAmount(Number(event.target.value))}
-      />
+      <>
+        <input
+          placeholder="Título"
+          value={title}
+          onChange={event => setTitle(event.target.value)}
+        />
+        {errors.title && <span>{errors.title}</span>}
+      </>
+
+      <>
+        <input
+          placeholder="Valor"
+          type="number"
+          value={amount}
+          onChange={event => setAmount(Number(event.target.value))}
+        />
+        {errors.amount && <span>{errors.amount}</span>}
+      </>
 
       <TransactionTypeContainer>
         <RadioBox
@@ -97,11 +122,14 @@ export function TransactionForm({
         </RadioBox>
       </TransactionTypeContainer>
 
-      <input
-        placeholder="Categoria"
-        value={category}
-        onChange={event => setCategory(event.target.value)}
-      />
+      <>
+        <input
+          placeholder="Categoria"
+          value={category}
+          onChange={event => setCategory(event.target.value)}
+        />
+        {errors.category && <span>{errors.category}</span>}
+      </>
 
       <button type="submit">{buttonText}</button>
     </Container>

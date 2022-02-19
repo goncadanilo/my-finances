@@ -25,6 +25,14 @@ export const Container = styled.form`
     & + input {
       margin-top: 1rem;
     }
+
+    & + span {
+      display: block;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+      color: var(--red);
+      font-size: 0.875rem;
+    }
   }
 
   button[type='submit'] {
