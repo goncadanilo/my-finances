@@ -49,8 +49,6 @@ Esse projeto é um sistema de controle financeiro que calcula o valor total de g
 
 Nesse módulo aprendi como construir uma aplicação front-end web completa utilizando conceitos e ferramentas importantes do ecossistema React como Styled Components, MirageJS, Context API, hooks, Axios e muito mais.
 
-Veja o resultado do projeto [aqui](https://my-finances-app.netlify.app/).
-
 ## 🔧 Como rodar
 
 É necessário ter instalado:
