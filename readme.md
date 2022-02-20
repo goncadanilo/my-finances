@@ -28,9 +28,8 @@
 
 <br>
 
-<p align="center">
-  <img alt="My Finances" src=".github/my-finances.png">
-</p>
+https://user-images.githubusercontent.com/53796755/154844898-15cd7175-ad53-490c-a8d8-c7e960152698.mp4
+
 
 ## 🚀 Tecnologias
 
