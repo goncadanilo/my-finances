@@ -1,9 +1,8 @@
 import Modal from 'react-modal';
 import { ConfirmDeleteTransactionModal } from 'src/components/ConfirmDeleteTransactionModal';
 import { DashBoard } from 'src/components/Dashboard';
-import { EditTransactionModal } from 'src/components/EditTransactionModal';
 import { Header } from 'src/components/Header';
-import { NewTransactionModal } from 'src/components/NewTransactionModal';
+import { TransactionFormModal } from 'src/components/TransactionFormModal';
 import { ModalProvider } from 'src/hooks/useModal';
 import { TransactionsProvider } from 'src/hooks/useTransactions';
 import { GlobalStyle } from 'src/styles/global';
@@ -17,8 +16,7 @@ export function App() {
         <Header />
         <DashBoard />
 
-        <NewTransactionModal />
-        <EditTransactionModal />
+        <TransactionFormModal />
         <ConfirmDeleteTransactionModal />
 
         <GlobalStyle />

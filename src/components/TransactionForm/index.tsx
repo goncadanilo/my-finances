@@ -8,8 +8,6 @@ import { transactionSchema } from './validation';
 
 interface TransactionFormProps {
   beforeSubmit: () => void;
-  formTitle: string;
-  buttonText: string;
 }
 
 interface FormErros {
@@ -18,13 +16,11 @@ interface FormErros {
   category?: string;
 }
 
-export function TransactionForm({
-  beforeSubmit,
-  formTitle,
-  buttonText,
-}: TransactionFormProps) {
+export function TransactionForm({ beforeSubmit }: TransactionFormProps) {
   const { selectedTransaction, createTransaction, updateTransaction } =
     useTransactions();
+
+  const isUpdate = !!selectedTransaction;
 
   const [errors, setErrors] = useState<FormErros>({});
   const [title, setTitle] = useState('');
@@ -50,7 +46,7 @@ export function TransactionForm({
       const data = { title, amount, transactionType, category };
       await transactionSchema.validate(data, { abortEarly: false });
 
-      if (selectedTransaction) {
+      if (isUpdate) {
         await updateTransaction(selectedTransaction.id, data);
       } else {
         await createTransaction(data);
@@ -79,7 +75,7 @@ export function TransactionForm({
 
   return (
     <Container onSubmit={handleSubmitForm}>
-      <h2>{formTitle}</h2>
+      <h2>{isUpdate ? 'Editar transação' : 'Cadastrar transação'}</h2>
 
       <>
         <input
@@ -131,7 +127,7 @@ export function TransactionForm({
         {errors.category && <span>{errors.category}</span>}
       </>
 
-      <button type="submit">{buttonText}</button>
+      <button type="submit">{isUpdate ? 'Salvar' : 'Cadastrar'}</button>
     </Container>
   );
 }

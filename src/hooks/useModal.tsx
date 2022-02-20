@@ -1,10 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 
 interface Modal {
-  name:
-    | 'new-transaction-modal'
-    | 'confirm-delete-transaction-modal'
-    | 'edit-transaction-modal';
+  name: 'transaction-form-modal' | 'confirm-delete-transaction-modal';
 }
 
 interface ModalContextData {

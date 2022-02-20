@@ -11,7 +11,7 @@ export function Header() {
         <img src={logoImg} alt="My Finances" />
         <button
           type="button"
-          onClick={() => openModal({ name: 'new-transaction-modal' })}
+          onClick={() => openModal({ name: 'transaction-form-modal' })}
         >
           Nova transação
         </button>

@@ -57,7 +57,7 @@ export function TransactionsTable() {
                     className="icon-button"
                     onClick={() => {
                       selectTransaction(transaction);
-                      openModal({ name: 'edit-transaction-modal' });
+                      openModal({ name: 'transaction-form-modal' });
                     }}
                   >
                     <img src={editImg} alt="Excluir transação" />

@@ -2,28 +2,27 @@ import Modal from 'react-modal';
 import { CloseModalButton } from 'src/components/CloseModalButton';
 import { TransactionForm } from 'src/components/TransactionForm';
 import { useModal } from 'src/hooks/useModal';
+import { useTransactions } from 'src/hooks/useTransactions';
 
-export function NewTransactionModal() {
+export function TransactionFormModal() {
+  const { selectTransaction } = useTransactions();
   const { isOpen, closeModal } = useModal();
 
   function handleCloseModal() {
-    closeModal({ name: 'new-transaction-modal' });
+    selectTransaction(null);
+    closeModal({ name: 'transaction-form-modal' });
   }
 
   return (
     <Modal
-      isOpen={isOpen({ name: 'new-transaction-modal' })}
+      isOpen={isOpen({ name: 'transaction-form-modal' })}
       onRequestClose={handleCloseModal}
       overlayClassName="react-modal-overlay"
       className="react-modal-content"
     >
       <CloseModalButton onClick={handleCloseModal} />
 
-      <TransactionForm
-        beforeSubmit={handleCloseModal}
-        formTitle="Cadastrar transação"
-        buttonText="Cadastrar"
-      />
+      <TransactionForm beforeSubmit={handleCloseModal} />
     </Modal>
   );
 }
