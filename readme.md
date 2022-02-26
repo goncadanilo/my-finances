@@ -58,21 +58,21 @@ Nesse módulo aprendi como construir uma aplicação front-end web completa util
 ### 🗂 Faça um clone do projeto
 
 ```bash
-$ git clone https://github.com/goncadanilo/my-finances.git
+git clone https://github.com/goncadanilo/my-finances.git
 ```
 
 ### 📥 Instale as dependências
 ```bash
 # Acesse o diretório do projeto
-$ cd my-finances
+cd my-finances
 
 # Instale as dependências
-$ yarn
+yarn
 ```
 
 ### ⚡ Inicie a aplicação
 ```bash
-$ yarn start
+yarn start
 ```
 
 ## 📝 Licença
