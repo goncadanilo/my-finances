@@ -48,6 +48,15 @@ Esse projeto é um sistema de controle financeiro que calcula o valor total de g
 
 Nesse módulo aprendi como construir uma aplicação front-end web completa utilizando conceitos e ferramentas importantes do ecossistema React como Styled Components, MirageJS, Context API, hooks, Axios e muito mais.
 
+### 🚀 Funcionalidades Extras
+
+Além do que foi desenvolvido durante o curso, tomei a liberdade de adicionar algumas funcionalidades extras:
+
+✅ Editar transações;
+✅ Excluir transações;
+✅ Validação do formulário;
+✅ Hook para controlar os modais;
+
 ## 🔧 Como rodar
 
 É necessário ter instalado:
