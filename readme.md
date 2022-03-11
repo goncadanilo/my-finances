@@ -52,10 +52,10 @@ Nesse módulo aprendi como construir uma aplicação front-end web completa util
 
 Além do que foi desenvolvido durante o curso, tomei a liberdade de adicionar algumas funcionalidades extras:
 
-✅ Editar transações;
-✅ Excluir transações;
-✅ Validação do formulário;
-✅ Hook para controlar os modais;
+- [x] Editar transações;
+- [x] Excluir transações;
+- [x] Validação do formulário;
+- [x] Hook para controlar os modais;
 
 ## 🔧 Como rodar
 
